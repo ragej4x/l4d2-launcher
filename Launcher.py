@@ -5,11 +5,29 @@ import os
 import requests
 import pyi_splash
 import time, sys
+
+
+url = "https://raw.githubusercontent.com/ragej4x/text-db/main/db.txt"
+
+response = requests.get(url)
+timeout = 1
+
+internet = False
+
+try:
+    requests.head("http://www.google.com/", timeout=timeout)
+    internet = True
+except requests.ConnectionError:
+    internet = False
+
+
 time.sleep(5)
 pyi_splash.close()
 
-url = "https://raw.githubusercontent.com/ragej4x/text-db/main/db.txt"
-response = requests.get(url)
+
+
+
+
 
 
 #L4D2 LAUNCHER
