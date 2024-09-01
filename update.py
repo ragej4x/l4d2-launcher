@@ -62,5 +62,21 @@ def update_game():
 
     exit()
 
-updat_addonse()
-update_game()
+
+
+def run():
+    try:
+        requests.get("http://www.google.com/", timeout=5)
+        return 1
+    except requests.ConnectionError:
+        return 0
+    
+
+if run():
+    updat_addonse()
+    update_game()
+else:
+    print("Connection error please check your internet connection")
+    print("If the error still persist contact me on Facebook or Emai")
+    print("Facebook : Jimboy Aczon")
+    print("Email : aczontongao@gmail.com")
