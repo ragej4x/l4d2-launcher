@@ -3,33 +3,35 @@ import gif_pygame
 import random
 import os
 import requests
-import pyi_splash
+#import pyi_splash
 import time, sys
 
 
 url = "https://raw.githubusercontent.com/ragej4x/text-db/main/db.txt"
 
-response = requests.get(url)
-timeout = 1
 
-internet = False
+internet = True
+
 
 try:
-    requests.head("http://www.google.com/", timeout=timeout)
+    requests.head("http://www.google.com/", timeout=5)
+    response = requests.get(url)
     internet = True
+    def withNet():
+        msg_cont = button_class(380, 250, f"{response.text}", 18)
+        msg_cont.render_button(get_event)
+
 except requests.ConnectionError:
+    print(requests.ConnectionError)
+    def noNet():
+
+        no_con = button_class(430, 250, f"'Error fetching data'\n\nNo internet connection ;(", 18)
+        no_con.render_button(get_event)
     internet = False
 
 
 time.sleep(5)
-pyi_splash.close()
-
-
-
-
-
-
-
+#pyi_splash.close()
 #L4D2 LAUNCHER
 
 window = pg.display.set_mode((820, 820/2))
@@ -95,7 +97,6 @@ readmsg = False
 
 
 while True:
-
     window.fill(0)
     get_event = pg.event.get()
     for event in get_event:
@@ -106,14 +107,13 @@ while True:
     if update_button.clicked == True:
         os.startfile("update.exe")
         os._exit(os.EX_OK)
-        time.sleep(1)
+
 
     if start_button.clicked == True:
         path = os.path.join('game' , 'os.exe')
         os.startfile(path)
         os._exit(os.EX_OK)
-        pg.quit() # quits pygame
-        sys.exit()
+
 
 
     if msg.clicked == True:
@@ -131,14 +131,10 @@ while True:
 
     #if readmsg == True:
 
-    if response.status_code == 200:
-        print("Contents of db.txt:")
-        print(response.text)
-        msg_cont = button_class(380, 250, f"{response.text}", 18)
-        msg_cont.render_button(get_event)
+    if internet == True:
+        withNet()
     else:
-        print(f"Error fetching data. Status code: {response.status_code}")
-
+        noNet()
 
     pg.display.set_caption(f"L4D LAUNCHER                                                                           { random.randint(10,90) }    | ACZON TONGAO |   { random.randint(10,90) }")
     pg.display.flip()   
